@@ -51,18 +51,60 @@ void MainWindow::on_Check_btn_clicked()
     QDir FirstDir = QDir (model->filePath(ui->DirChooseLeft->rootIndex()));
     QDir SecondDir = QDir (model->filePath(ui->DirChooseRight->rootIndex()));
 
-    MyMap FilesMap;                                                                 //Creating 'QHash' object with collisions allowed
-    QHash<QString,QString> FinalList;
+    MyMap FilesMap;                                                              //Creating 'QHash' object with collisions allowed
     GetFilesInHash (FirstDir,FilesMap);
     GetFilesInHash (SecondDir,FilesMap);
-    Compare(FilesMap, FinalList);
-    output(FinalList);
+    Compare(FilesMap);
 }
 
-void MainWindow::output (const QHash<QString,QString>& FinalList)
+void MainWindow::output (const QString& value)
 {
-    for (auto it=FinalList.begin(); it!=FinalList.end();++it)
-    ui->ResultList->addItem(*it);
+    ui->ResultList->addItem(value);
+}
+
+void MainWindow::Compare(MyMap & Hash)
+{
+    bool flag = 0;
+    MyMap::iterator it;
+    for( it=Hash.begin(); it != Hash.end(); ++it)                               //Global 'for' for searching through all 'Hash'
+    {
+       if (Hash.count(it.key())>1 && (*it!="nothing"))                          //If this member in the collision bucket and not flagged yet then algorithm have to compare elements with each other from this bucket
+       {
+           MyMap::iterator ii = Hash.find(it.key());                            //iterator for bucket scan. This iterator's content will be compared with all next in the same bucket
+           while((ii!=(Hash.end()-1)) && ((ii).key() == it.key()))
+           {
+              if (ii.value() == "nothing")                                      //skip marked elements
+              {
+                ++ii;
+              }
+              else
+              {
+                 MyMap::iterator inner=ii+1;                                     //iterator for all next members...
+                 while ((inner!=Hash.end()) && (inner.key() == it.key()))
+                 {
+                      if (inner.value()=="nothing")                              //...except marked ones
+                      {
+                          ++inner;
+                      }
+                      else
+                      {
+                         if(HashSumCheck(ii.value(),inner.value()))              //If Hash-sum is exact the same for both files then add absolute path to this file at result list...
+                         {
+                            flag=1;                                              //... and mark (with help of flag) that 'ii' iterator contain duplicate's file name. Also mark 'inner' cause it's already in output
+                            output(inner.value());
+                            inner.value()="nothing";
+                         }
+                          ++inner;
+                       }
+                  }
+               if(flag) {output(ii.value());}
+               *ii="nothing";                                                    //flag elements cause there is no point to work with them multiple times
+               ++ii;
+               flag=0;
+              }
+            }
+        }
+    }
 }
 
 
