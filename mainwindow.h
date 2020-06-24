@@ -4,7 +4,11 @@
 #include <QMainWindow>
 #include <QFileSystemModel>
 #include <Functions.h>
-
+#include <QListWidget>
+#include <QDesktopServices>
+#include <QFileDialog>
+#include <QFileIconProvider>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,16 +21,14 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void output (const QString& value);                                  //method for output duplicates in widget list
-    void Compare(MyMap & Hash);                                          //method for bucket members comparison
+    void Compare(MyMap & Hash);                                          //method for bucket members comparison (from 'Hash'). It'll also call the 'output' function
+    void output (const QString& StringPath);                             //method will add item at the 'ResultList' widget by the absoulute path name
 
 private slots:
-    void on_DirChooseLeft_doubleClicked(const QModelIndex &index);
-
+    void on_DirChooseLeft_doubleClicked(const QModelIndex &index);       //these slots are necessery for the file system navigation possibility
     void on_DirChooseRight_doubleClicked(const QModelIndex &index);
-
     void on_Check_btn_clicked();
-
+    void on_ResultList_itemDoubleClicked(QListWidgetItem *item);         //folder which contain chosen file from the 'ResultList' will be open by double click on it
 private:
     Ui::MainWindow *ui;
     QFileSystemModel *model;
