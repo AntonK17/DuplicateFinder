@@ -58,7 +58,7 @@ void MainWindow::on_Check_btn_clicked()
     ui->ResultLabel->setText("Results (Double click to open file directory)");
 }
 
-void MainWindow::Compare(MyMap & Hash)
+void MainWindow::Compare(MyMap &Hash)
 {
     bool flag = 0;
     QString Sflag="\0";
@@ -94,7 +94,7 @@ void MainWindow::Compare(MyMap & Hash)
                           ++inner;
                        }
                   }
-               if(flag) {output(ii.value());}
+               if(flag) {output(ii.value());}                               //if 'ii' contain duplicate ('flag' = true)  then add it to the final list
                *ii=Sflag;                                                   //flag elements cause there is no point to work with them multiple times
                ++ii;
                flag=0;
@@ -118,6 +118,12 @@ void MainWindow::output(const QString &StringPath)                          //se
 void MainWindow::on_ResultList_itemDoubleClicked(QListWidgetItem *item)
 {
     QFileInfo FIleInfo(item->text());
-    QDesktopServices::openUrl(QUrl("file:///" + FIleInfo.path()));
+    QDesktopServices::openUrl(FIleInfo.path());
 }
 
+
+void MainWindow::on_RefreshButton_clicked()
+{
+    ui->DirChooseRight->reset();
+    ui->DirChooseLeft->reset();
+}

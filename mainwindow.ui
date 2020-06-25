@@ -81,14 +81,25 @@
            </property>
           </widget>
          </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="Check_btn">
+             <property name="text">
+              <string>Check</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="RefreshButton">
+             <property name="text">
+              <string>Reset File system widgets</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="Check_btn">
-         <property name="text">
-          <string>Check</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>

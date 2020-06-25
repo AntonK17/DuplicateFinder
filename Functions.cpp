@@ -2,7 +2,7 @@
 #include "ui_mainwindow.h"
 #include "Functions.h"
 
-void GetFilesInHash (QDir &dir,MyMap & Hash)
+void GetFilesInHash (QDir &dir,MyMap &Hash)
 {
     foreach (QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::DirsFirst)) //looking for every file (which match filters) in the directory
     {
@@ -19,7 +19,7 @@ void GetFilesInHash (QDir &dir,MyMap & Hash)
     }
 }
 
-bool IsNotAlreadyExist(const QFileInfo& info,MyMap& Hash)
+bool IsNotAlreadyExist(const QFileInfo &info,MyMap &Hash)
 {
     MyMap::iterator it = Hash.find(QPair<QString,int>(info.fileName(),info.size()));
     while((it!=Hash.end()) && (it.key() == QPair<QString,int>(info.fileName(),info.size())))                  //looking for all files in hash with the same key
@@ -31,7 +31,7 @@ bool IsNotAlreadyExist(const QFileInfo& info,MyMap& Hash)
     return true;                                                                                              //return 'true' in other cases
 }
 
-bool HashSumCheck (const QString& filename1, const QString& filename2)                                        //Method checks hash-sums for two files
+bool HashSumCheck (const QString &filename1, const QString &filename2)                                        //Method checks hash-sums for two files
 {
     QCryptographicHash Md5Hash(QCryptographicHash::Md5);                                                      //if md5 sum is exact the same for both files then they are duplicates with an almost 100% probability
     QByteArray check;
