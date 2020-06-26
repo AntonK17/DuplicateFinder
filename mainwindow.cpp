@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include "WorkerObject.h"
 #include "mainwindow.h"
+#include "waitingspinnerwidget.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(this, &MainWindow::destroyed, thread1, &QThread::quit);
     b_worker->moveToThread(thread1);
     thread1->start( QThread::HighPriority);
-
+    spinner = new WaitingSpinnerWidget(ui->ResultList);
 }
 
 MainWindow::~MainWindow()
@@ -60,6 +61,7 @@ void MainWindow::on_DirChooseRight_doubleClicked(const QModelIndex &index)      
 void MainWindow::on_Check_btn_clicked()
 {
     ui->ResultList->clear();
+    spinner->start();
     ui->Warning_lbl->setText("The search may take time... Please wait for a while");
     ui->Check_btn->setEnabled(false);
     QString FirstDir = model->filePath(ui->DirChooseLeft->rootIndex());             //get directories from the list views
@@ -72,6 +74,7 @@ void MainWindow::GetData()
     FinalMainHash= b_worker->Hash;
     output();
     ui->Check_btn->setEnabled(true);
+    spinner->stop();
     ui->Warning_lbl->setText("Done! You can open file directory by double click on it");
 }
 
@@ -79,7 +82,6 @@ void MainWindow::output()                                                       
 {                                                                                   //...then add generated items to the 'ResultList' widget
     for(auto it=FinalMainHash.begin();it!=FinalMainHash.end(); ++it)
     {
-
     QListWidgetItem *item = new QListWidgetItem(ui->ResultList);
     item->setText(it.value());
     QFileInfo finfo(it.value());

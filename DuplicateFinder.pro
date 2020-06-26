@@ -18,12 +18,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     WorkerObject.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    waitingspinnerwidget.cpp
 
 HEADERS += \
     WorkerObject.h \
     includes.h \
-    mainwindow.h
+    mainwindow.h \
+    waitingspinnerwidget.h
 
 FORMS += \
     mainwindow.ui

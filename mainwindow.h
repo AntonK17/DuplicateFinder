@@ -3,6 +3,7 @@
 
 #include <includes.h>
 #include <WorkerObject.h>
+#include <waitingspinnerwidget.h>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -32,6 +33,7 @@ private:
     QFileSystemModel *model;
     Worker *b_worker;
     QThread *thread1;
+    WaitingSpinnerWidget *spinner;
 };
 
 #endif // MAINWINDOW_H
