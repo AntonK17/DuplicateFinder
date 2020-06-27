@@ -13,10 +13,13 @@
 #include <QFileIconProvider>
 #include <QLabel>
 #include <QThread>
+#include <QTime>
+#include <QDebug>
+#include <QEventLoop>
+#include <QCoreApplication>
 
-typedef QHash<QPair<QString,int>,QString> MyMap;                                                         //'MyMap' will contain files with the same name and size (this pair is the 'key') in one bucket (buckets contain collsion members )...
-                                                                                                         //...It'll help to find duplicates. The 'value' in MyMap is the absolute path to the file
+typedef QHash<QPair<QString,int>,QPair<QString,bool>> MyMap;
 
-
+void Mydelay();
 
 #endif // INCLUDES_H

@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <includes.h>
-#include <WorkerObject.h>
-#include <waitingspinnerwidget.h>
 #include <QMainWindow>
+#include <includes.h>
+#include <backgroundworker.h>
+#include <waitingspinnerwidget.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -13,27 +13,33 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    MyMap HashTable;
 signals:
-    void startOpeartion(const QString&, const QString&);
+    void StartHashing1(const QString&);
+    void StartHashing2(const QString&);
 private slots:
-    void GetData();                                                      //this slot recieve data (Hash table with results) from 'thread1' process
-    void on_DirChooseLeft_doubleClicked(const QModelIndex &index);       //these slots are necessery for the file system navigation possibility
-    void on_DirChooseRight_doubleClicked(const QModelIndex &index);
-    void on_Check_btn_clicked();
-    void on_ResultList_itemDoubleClicked(QListWidgetItem *item);         //folder which contain chosen file from the 'ResultList' will be opened by double click on it
-    void on_Refresh_Btn_clicked();
+    void WorkerFinished();
+    void on_CheckButton_clicked();
+    void on_RefreshButton_clicked();
+    void on_ResultList_itemDoubleClicked(QListWidgetItem *item);
+    void on_UpperList_doubleClicked(const QModelIndex &index);
+    void on_LowerList_doubleClicked(const QModelIndex &index);
+    void GetData(const QString&, const QString&);
+    void on_SortButton_clicked();
+
+    void on_StopButton_clicked();
 
 private:
-    void output();                                                       //adds items from 'FinalMainHash' at the 'ResultList' widget
-    MyMap FinalMainHash;
+    short ThreadCounter=0;
+    bool IsDirNotDifferent(const QString&, const QString&);
     Ui::MainWindow *ui;
     QFileSystemModel *model;
-    Worker *b_worker;
     QThread *thread1;
+    QThread *thread2;
     WaitingSpinnerWidget *spinner;
 };
-
 #endif // MAINWINDOW_H
