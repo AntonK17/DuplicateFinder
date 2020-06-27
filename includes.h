@@ -13,6 +13,7 @@
 #include <QFileIconProvider>
 #include <QLabel>
 #include <QThread>
+#include <QMutexLocker>
 #include <QTime>
 #include <QDebug>
 #include <QEventLoop>

@@ -19,8 +19,9 @@ public:
     ~MainWindow();
     MyMap HashTable;
 signals:
-    void StartHashing1(const QString&);
-    void StartHashing2(const QString&);
+    void StartHashing1(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
+    void StartHashing2(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
+    void SendInsiderDirsFlag();
 private slots:
     void WorkerFinished();
     void on_CheckButton_clicked();
@@ -30,12 +31,15 @@ private slots:
     void on_LowerList_doubleClicked(const QModelIndex &index);
     void GetData(const QString&, const QString&);
     void on_SortButton_clicked();
-
     void on_StopButton_clicked();
-
+    void on_UpperInsideDirs_toggled(bool checked);
+    void on_LowerInsideDirs_toggled(bool checked);
 private:
     short ThreadCounter=0;
-    bool IsDirNotDifferent(const QString&, const QString&);
+    short NumberOfThreads=2;
+    bool InsidersAllowedFlag1=0;
+    bool InsidersAllowedFlag2=0;
+    bool IsDirNotDifferent(const QString &str1, const QString &str2);
     Ui::MainWindow *ui;
     QFileSystemModel *model;
     QThread *thread1;

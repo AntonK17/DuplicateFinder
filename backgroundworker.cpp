@@ -1,37 +1,38 @@
 #include "backgroundworker.h"
 
-void Worker::setMap(MyMap &MainMap)
+void Worker::HashWorker(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed)
 {
-    Hash=&MainMap;
-}
-
-void Worker::HashWorker(const QString& DirName)
-{
-    GetFilesInHash(DirName);
+    AllowInsiders=InsidersAllowed;
+    GetFilesInHash(DirName,ExludeDirName);
     emit FinishedWork();
 }
 
-void Worker::GetFilesInHash(const QString& DirName)
+void Worker::GetFilesInHash(const QString &DirName, const QString &exlude)
 {
         QDir dir = QDir(DirName);
         foreach (QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::DirsFirst)) //looking for every file (which match filters) in the directory
         {
-            if (info.isDir() && dir.cd(info.fileName()))                                                          //if 'info' is a directory then call this function again for this folder
-            {
-                GetFilesInHash(dir.absolutePath());
-                dir.cdUp();
-            }
+            if (info.absoluteFilePath()==exlude){}
             else
             {
-                if (ItemSender(info,*Hash))
-                Hash->insertMulti(QPair<QString,int>(info.fileName(),info.size()),QPair<QString,bool>(info.absoluteFilePath(),false));
+                if (info.isDir() && dir.cd(info.fileName()) && AllowInsiders)                                     //if 'info' is a directory then call this function again for this folder
+                {
+                GetFilesInHash(dir.absolutePath(),exlude);
+                dir.cdUp();
+                }
+                else if (!info.isDir())
+                {
+                ItemSender(info,*Hash);
+                }
             }
         }
 }
 
-
-bool Worker::ItemSender(const QFileInfo & info, MyMap &Hash)
+void Worker::ItemSender(const QFileInfo &info, MyMap &Hash)
 {
+    QMutex mutex;
+    QMutexLocker locker(&mutex);
+
     MyMap::iterator it = Hash.find(QPair<QString,int>(info.fileName(),info.size()));
     while((it!=Hash.end()) && (it.key() == QPair<QString,int>(info.fileName(),info.size())))
     {
@@ -41,16 +42,17 @@ bool Worker::ItemSender(const QFileInfo & info, MyMap &Hash)
               if(it.value().second == false)
               {
                   emit SendItem(it.value().first, it.key().first);
-                  it.value().first=true;
+                  it.value().second=true;
               }
-              return false;
+              return;
           }
           ++it;
     }
-    return true;
+    Hash.insertMulti(QPair<QString,int>(info.fileName(),info.size()),QPair<QString,bool>(info.absoluteFilePath(),false));
+    return;
 }
 
-bool Worker::HashSumCheck (const QString& filename1, const QString& filename2)   //Method checks hash-sums for two files
+bool Worker::HashSumCheck (const QString &filename1, const QString &filename2)   //Method checks hash-sums for two files
 {
     QCryptographicHash Md5Hash(QCryptographicHash::Md5);                         //if md5 sum is exact the same for both files then they are duplicates with an almost 100% probability
     QByteArray check;
@@ -68,9 +70,13 @@ bool Worker::HashSumCheck (const QString& filename1, const QString& filename2)  
                 if (Md5Hash.addData(&SecondFile))
                 {
                    if (Md5Hash.result() == check)
+                   {
                        return true;
+                   }
                    else
+                   {
                        return false;
+                   }
                 }
             }
         }
@@ -78,9 +84,10 @@ bool Worker::HashSumCheck (const QString& filename1, const QString& filename2)  
     }
    return false;
 }
+
 void Mydelay()                                                                     //helpful delay
 {
-    QTime dieTime= QTime::currentTime().addSecs(2);
+    QTime dieTime= QTime::currentTime().addSecs(10);
     while (QTime::currentTime() < dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }

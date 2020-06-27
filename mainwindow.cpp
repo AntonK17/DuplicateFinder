@@ -14,10 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     model->setRootPath("");                                                     //this method helps to observe all the changes in current directory permamently
     ui->UpperList->setModel(model);                                             //set both view lists
     ui->LowerList->setModel(model);
-    Worker *worker1=new Worker();
-    Worker *worker2=new Worker();
-    worker1->setMap(HashTable);
-    worker2->setMap(HashTable);
+    Worker *worker1=new Worker(HashTable);
+    Worker *worker2=new Worker(HashTable);
 
     connect (this, &MainWindow::StartHashing1, worker1, &Worker::HashWorker);
     connect (worker1, &Worker::SendItem, this, &MainWindow::GetData);
@@ -25,17 +23,18 @@ MainWindow::MainWindow(QWidget *parent)
     connect (worker2, &Worker::SendItem, this, &MainWindow::GetData);
     connect (worker1, &Worker::FinishedWork, this, &MainWindow::WorkerFinished);
     connect (worker2, &Worker::FinishedWork, this, &MainWindow::WorkerFinished);
-
     thread1=new QThread();
     thread2=new QThread();
     worker1->moveToThread(thread1);
     worker2->moveToThread(thread2);
 
-
     spinner = new WaitingSpinnerWidget(ui->ForSpinner);
     ui->ForSpinner->setStyleSheet("background color: transparent;");
     spinner->setInnerRadius(5);
     spinner->setLineLength(5);
+
+    ui->StopButton->setIcon(QIcon(":/icons/Stop.png"));
+    ui->CheckButton->setIcon(QIcon(":/icons/Start.png"));
 
     ui->SortButton->setEnabled(false);
     ui->StopButton->setEnabled(false);
@@ -77,27 +76,52 @@ void MainWindow::on_LowerList_doubleClicked(const QModelIndex &index)
 
 void MainWindow::on_CheckButton_clicked()
 {
-    thread1->start();
-    thread2->start();
+    QString FirstDir = model->filePath(ui->UpperList->rootIndex());                 //get directories names from the list views
+    QString SecondDir = model->filePath(ui->LowerList->rootIndex());
+    if (IsDirNotDifferent(FirstDir,SecondDir))
+    {
     HashTable.clear();
     ui->ResultList->clear();
     spinner->start();
     ui->SortButton->setEnabled(false);
     ui->CheckButton->setEnabled(false);
-    QString FirstDir = model->filePath(ui->UpperList->rootIndex());                 //get directories names from the list views
-    QString SecondDir = model->filePath(ui->LowerList->rootIndex());
-    emit StartHashing1(FirstDir);
-    emit StartHashing2(SecondDir);
     ui->StopButton->setEnabled(true);
     ui->HelperLabel->setText("Double click on file to open its directory in explorer");
+    }
 }
 
 bool MainWindow::IsDirNotDifferent(const QString &str1, const QString &str2)
 {
-    if((str1.contains(str2)) || (str2.contains(str1)))
-        return true;
-    else
+    if (str1 == str2)
+    {
+        ui->HelperLabel->setText("What's the point to select identical directories?");
         return false;
+    }
+    else if(str1.indexOf(str2) == 0 && str2.count("/") != str1.count("/"))
+    {
+        qDebug()<<"Find in second directory"<<str1<<str2;
+        thread1->start();
+        thread2->start();
+        emit StartHashing1(str1,NULL,InsidersAllowedFlag1);
+        emit StartHashing2(str2,str1,InsidersAllowedFlag2);
+    }
+    else if(str2.indexOf(str1) == 0 && str2.count("/") != str1.count("/"))
+    {
+        qDebug()<<"find in First directory"<<str1<<str2;
+        thread1->start();
+        thread2->start();
+        emit StartHashing1(str1,str2,InsidersAllowedFlag1);
+        emit StartHashing2(str2,NULL,InsidersAllowedFlag2);
+    }
+    else
+    {
+        qDebug()<<"start with two threads";
+        thread1->start();
+        thread2->start();
+        emit StartHashing1(str1,NULL,InsidersAllowedFlag1);
+        emit StartHashing2(str2, NULL,InsidersAllowedFlag2);
+    }
+    return true;
 }
 
 void MainWindow::on_RefreshButton_clicked()
@@ -113,10 +137,10 @@ void MainWindow::on_ResultList_itemDoubleClicked(QListWidgetItem *item)
     QDesktopServices::openUrl(QUrl("file:///" + FIleInfo.path()));
 }
 
-void MainWindow::GetData(const QString& itemPath, const QString& name)
+void MainWindow::GetData(const QString &itemPath, const QString &name)
 {
     QListWidgetItem *item = new QListWidgetItem(ui->ResultList);
-    item->setText(name + " ( " + itemPath + " ) ");
+    item->setText("(" + name + ") " + "Path:" + itemPath );
     QFileInfo finfo(itemPath);
     QFileIconProvider ip;
     QIcon ic=ip.icon(finfo);
@@ -132,8 +156,9 @@ void MainWindow::on_SortButton_clicked()
 void MainWindow::WorkerFinished()
 {
     ++ThreadCounter;
-    if (ThreadCounter == 2)
+    if (ThreadCounter == NumberOfThreads)
     {
+        qDebug()<<"Work finished, threadcount ="<< ThreadCounter<<"mod = "<< NumberOfThreads;
         spinner->stop();
         ui->SortButton->setEnabled(true);
         ui->CheckButton->setEnabled(true);
@@ -155,4 +180,13 @@ void MainWindow::on_StopButton_clicked()
     ui->SortButton->setEnabled(true);
     spinner->stop();
     ui->HelperLabel->setText("Double click on file to open its directory in explorer");
+}
+void MainWindow::on_UpperInsideDirs_toggled(bool checked)
+{
+    InsidersAllowedFlag1=checked;
+}
+
+void MainWindow::on_LowerInsideDirs_toggled(bool checked)
+{
+    InsidersAllowedFlag2=checked;
 }
