@@ -15,10 +15,12 @@
 #include <QThread>
 #include <QMutexLocker>
 #include <QTime>
-#include <QDebug>
 #include <QEventLoop>
 #include <QCoreApplication>
 
+/*The key will generate from pair of file's name and size
+ QString from value is for absolute path and bool is for flag
+which will be used as indicator that information about this file has already sent*/
 typedef QHash<QPair<QString,int>,QPair<QString,bool>> MyMap;
 
 void Mydelay();
