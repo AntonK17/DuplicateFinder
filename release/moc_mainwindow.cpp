@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../../Git/Projects/DuplicateFinder/mainwindow.h"
+#include "../../DuplicatesFinder/mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[28];
-    char stringdata0[480];
+    QByteArrayData data[30];
+    char stringdata0[515];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -58,7 +58,9 @@ QT_MOC_LITERAL(23, 394, 4), // "arg1"
 QT_MOC_LITERAL(24, 399, 24), // "on_UpperLine_textChanged"
 QT_MOC_LITERAL(25, 424, 40), // "on_ResultList_customContextMe..."
 QT_MOC_LITERAL(26, 465, 3), // "pos"
-QT_MOC_LITERAL(27, 469, 10) // "deleteFile"
+QT_MOC_LITERAL(27, 469, 10), // "deleteFile"
+QT_MOC_LITERAL(28, 480, 20), // "DeleteEnabledChecker"
+QT_MOC_LITERAL(29, 501, 13) // "WWindowClosed"
 
     },
     "MainWindow\0StartHashing1\0\0DirName\0"
@@ -74,7 +76,8 @@ QT_MOC_LITERAL(27, 469, 10) // "deleteFile"
     "on_LowerLine_textChanged\0arg1\0"
     "on_UpperLine_textChanged\0"
     "on_ResultList_customContextMenuRequested\0"
-    "pos\0deleteFile"
+    "pos\0deleteFile\0DeleteEnabledChecker\0"
+    "WWindowClosed"
 };
 #undef QT_MOC_LITERAL
 
@@ -84,7 +87,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,25 +95,27 @@ static const uint qt_meta_data_MainWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   99,    2, 0x06 /* Public */,
-       6,    3,  106,    2, 0x06 /* Public */,
+       1,    3,  109,    2, 0x06 /* Public */,
+       6,    3,  116,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,  113,    2, 0x08 /* Private */,
-       8,    2,  114,    2, 0x08 /* Private */,
-       9,    0,  119,    2, 0x08 /* Private */,
-      10,    0,  120,    2, 0x08 /* Private */,
-      11,    1,  121,    2, 0x08 /* Private */,
-      14,    1,  124,    2, 0x08 /* Private */,
-      16,    1,  127,    2, 0x08 /* Private */,
-      17,    0,  130,    2, 0x08 /* Private */,
-      18,    0,  131,    2, 0x08 /* Private */,
-      19,    1,  132,    2, 0x08 /* Private */,
-      21,    1,  135,    2, 0x08 /* Private */,
-      22,    1,  138,    2, 0x08 /* Private */,
-      24,    1,  141,    2, 0x08 /* Private */,
-      25,    1,  144,    2, 0x08 /* Private */,
-      27,    0,  147,    2, 0x08 /* Private */,
+       7,    0,  123,    2, 0x08 /* Private */,
+       8,    2,  124,    2, 0x08 /* Private */,
+       9,    0,  129,    2, 0x08 /* Private */,
+      10,    0,  130,    2, 0x08 /* Private */,
+      11,    1,  131,    2, 0x08 /* Private */,
+      14,    1,  134,    2, 0x08 /* Private */,
+      16,    1,  137,    2, 0x08 /* Private */,
+      17,    0,  140,    2, 0x08 /* Private */,
+      18,    0,  141,    2, 0x08 /* Private */,
+      19,    1,  142,    2, 0x08 /* Private */,
+      21,    1,  145,    2, 0x08 /* Private */,
+      22,    1,  148,    2, 0x08 /* Private */,
+      24,    1,  151,    2, 0x08 /* Private */,
+      25,    1,  154,    2, 0x08 /* Private */,
+      27,    2,  157,    2, 0x08 /* Private */,
+      28,    0,  162,    2, 0x08 /* Private */,
+      29,    0,  163,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,    3,    4,    5,
@@ -131,6 +136,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::QString,   23,
     QMetaType::Void, QMetaType::QString,   23,
     QMetaType::Void, QMetaType::QPoint,   26,
+    QMetaType::Void, QMetaType::Bool, QMetaType::Bool,    2,    2,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -158,7 +165,9 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 13: _t->on_LowerLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 14: _t->on_UpperLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 15: _t->on_ResultList_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 16: _t->deleteFile(); break;
+        case 16: _t->deleteFile((*reinterpret_cast< const bool(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
+        case 17: _t->DeleteEnabledChecker(); break;
+        case 18: _t->WWindowClosed(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -205,13 +214,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 17)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 17;
+        _id -= 19;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 17)
+        if (_id < 19)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 17;
+        _id -= 19;
     }
     return _id;
 }

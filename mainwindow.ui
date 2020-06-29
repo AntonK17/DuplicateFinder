@@ -211,6 +211,12 @@
         </property>
         <item>
          <widget class="QFrame" name="HelpfulFrame1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -242,6 +248,12 @@
           </item>
           <item row="0" column="1">
            <widget class="QLabel" name="HelperLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="font">
              <font>
               <family>Times New Roman</family>
@@ -268,6 +280,12 @@
         </item>
         <item>
          <widget class="QFrame" name="HelpfulFrame2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
           </property>
@@ -288,7 +306,7 @@
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>18</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

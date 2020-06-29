@@ -21,16 +21,19 @@ SOURCES += \
     backgroundworker.cpp \
     main.cpp \
     mainwindow.cpp \
-    waitingspinnerwidget.cpp
+    waitingspinnerwidget.cpp \
+    warningwindow.cpp
 
 HEADERS += \
     backgroundworker.h \
     includes.h \
     mainwindow.h \
-    waitingspinnerwidget.h
+    waitingspinnerwidget.h \
+    warningwindow.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    warningwindow.ui
 
 RC_FILE = res.rc
 # Default rules for deployment.

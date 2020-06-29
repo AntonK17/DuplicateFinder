@@ -18,6 +18,8 @@
 #include <QEventLoop>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QtGui>
+#include <QFile>
 
 /*The key will generate from pair of file's name and size
  QString from value is for absolute path and bool is for flag

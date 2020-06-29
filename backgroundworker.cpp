@@ -7,11 +7,11 @@ void Worker::HashWorker(const QString &DirName, const QString &ExludeDirName, co
     emit FinishedWork();
 }
 
+/*looking for every file (which match filters) in the directory
+ if 'info' is a directory then call this function again for it (Won't work if searching inner directories is prohibited)
+ if 'info' is a file then call ItemSender to find out what to do with it*/
 void Worker::GetFilesInHash(const QString &DirName, const QString &exlude)
 {
-     /*looking for every file (which match filters) in the directory
-      if 'info' is a directory then call this function again for it (Won't work if searching inner directories is prohibited)
-      if 'info' is a file then call ItemSender to find out what to do with it*/
         QDir dir = QDir(DirName);
         foreach (QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::DirsFirst))
         {
@@ -31,11 +31,11 @@ void Worker::GetFilesInHash(const QString &DirName, const QString &exlude)
         }
 }
 
+/* if method won't find any records with the same key as 'info'(name and size pair) create new record
+ * if it will then compare all the files records point to with 'info' file. 'HashSumCheck' function will help
+ * if the files match then send them to the main thread and flag(it.value().second) that file's information from the record has already been sent*/
 void Worker::ItemSender(const QFileInfo &info, MyMap &Hash)
 {
-    /* if method won't find any records with the same key as 'info'(name and size pair) create new record
-     * if it will then compare all the files records point to with 'info' file. 'HashSumCheck' function will help
-     * if the files match then send them to the main thread and flag(it.value().second) that file's information from the record has already been sent*/
     QMutex mutex;
     QMutexLocker locker(&mutex);
 
@@ -58,10 +58,10 @@ void Worker::ItemSender(const QFileInfo &info, MyMap &Hash)
     return;
 }
 
+/*Method checks hash-sums for two files
+ * if md5 sum is exact the same for both files then they are duplicates with an almost 100% probability*/
 bool Worker::HashSumCheck (const QString &filename1, const QString &filename2)
 {
-    /*Method checks hash-sums for two files
-     * if md5 sum is exact the same for both files then they are duplicates with an almost 100% probability*/
     QCryptographicHash Md5Hash(QCryptographicHash::Md5);
     QByteArray check;
     QFile FirstFile(filename1);
@@ -84,19 +84,14 @@ bool Worker::HashSumCheck (const QString &filename1, const QString &filename2)
                    else
                    {
                        return false;
-                   }
-                }
-            }
-        }
-
-    }
+                   }}}}}
    return false;
 }
 
 void Mydelay()
 {
     //helpful delay
-    QTime dieTime= QTime::currentTime().addSecs(10);
+    QTime dieTime= QTime::currentTime().addSecs(1);
     while (QTime::currentTime() < dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
