@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[25];
-    char stringdata0[424];
+    QByteArrayData data[28];
+    char stringdata0[480];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,7 +55,10 @@ QT_MOC_LITERAL(20, 334, 7), // "checked"
 QT_MOC_LITERAL(21, 342, 26), // "on_LowerInsideDirs_toggled"
 QT_MOC_LITERAL(22, 369, 24), // "on_LowerLine_textChanged"
 QT_MOC_LITERAL(23, 394, 4), // "arg1"
-QT_MOC_LITERAL(24, 399, 24) // "on_UpperLine_textChanged"
+QT_MOC_LITERAL(24, 399, 24), // "on_UpperLine_textChanged"
+QT_MOC_LITERAL(25, 424, 40), // "on_ResultList_customContextMe..."
+QT_MOC_LITERAL(26, 465, 3), // "pos"
+QT_MOC_LITERAL(27, 469, 10) // "deleteFile"
 
     },
     "MainWindow\0StartHashing1\0\0DirName\0"
@@ -69,7 +72,9 @@ QT_MOC_LITERAL(24, 399, 24) // "on_UpperLine_textChanged"
     "on_UpperInsideDirs_toggled\0checked\0"
     "on_LowerInsideDirs_toggled\0"
     "on_LowerLine_textChanged\0arg1\0"
-    "on_UpperLine_textChanged"
+    "on_UpperLine_textChanged\0"
+    "on_ResultList_customContextMenuRequested\0"
+    "pos\0deleteFile"
 };
 #undef QT_MOC_LITERAL
 
@@ -79,7 +84,7 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -87,23 +92,25 @@ static const uint qt_meta_data_MainWindow[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   89,    2, 0x06 /* Public */,
-       6,    3,   96,    2, 0x06 /* Public */,
+       1,    3,   99,    2, 0x06 /* Public */,
+       6,    3,  106,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,  103,    2, 0x08 /* Private */,
-       8,    2,  104,    2, 0x08 /* Private */,
-       9,    0,  109,    2, 0x08 /* Private */,
-      10,    0,  110,    2, 0x08 /* Private */,
-      11,    1,  111,    2, 0x08 /* Private */,
-      14,    1,  114,    2, 0x08 /* Private */,
-      16,    1,  117,    2, 0x08 /* Private */,
-      17,    0,  120,    2, 0x08 /* Private */,
-      18,    0,  121,    2, 0x08 /* Private */,
-      19,    1,  122,    2, 0x08 /* Private */,
-      21,    1,  125,    2, 0x08 /* Private */,
-      22,    1,  128,    2, 0x08 /* Private */,
-      24,    1,  131,    2, 0x08 /* Private */,
+       7,    0,  113,    2, 0x08 /* Private */,
+       8,    2,  114,    2, 0x08 /* Private */,
+       9,    0,  119,    2, 0x08 /* Private */,
+      10,    0,  120,    2, 0x08 /* Private */,
+      11,    1,  121,    2, 0x08 /* Private */,
+      14,    1,  124,    2, 0x08 /* Private */,
+      16,    1,  127,    2, 0x08 /* Private */,
+      17,    0,  130,    2, 0x08 /* Private */,
+      18,    0,  131,    2, 0x08 /* Private */,
+      19,    1,  132,    2, 0x08 /* Private */,
+      21,    1,  135,    2, 0x08 /* Private */,
+      22,    1,  138,    2, 0x08 /* Private */,
+      24,    1,  141,    2, 0x08 /* Private */,
+      25,    1,  144,    2, 0x08 /* Private */,
+      27,    0,  147,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,    3,    4,    5,
@@ -123,6 +130,8 @@ static const uint qt_meta_data_MainWindow[] = {
     QMetaType::Void, QMetaType::Bool,   20,
     QMetaType::Void, QMetaType::QString,   23,
     QMetaType::Void, QMetaType::QString,   23,
+    QMetaType::Void, QMetaType::QPoint,   26,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -148,6 +157,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->on_LowerInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 13: _t->on_LowerLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 14: _t->on_UpperLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 15: _t->on_ResultList_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 16: _t->deleteFile(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -194,13 +205,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 15)
+        if (_id < 17)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 15;
+        _id -= 17;
     }
     return _id;
 }

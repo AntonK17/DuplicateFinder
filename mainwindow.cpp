@@ -23,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent)
     worker1->moveToThread(thread1);
     worker2->moveToThread(thread2);
 
+    //context menu for result list
+    ui->ResultList->setContextMenuPolicy(Qt::CustomContextMenu);
+
     //connections to manipulate workers from main thread
     connect (this, &MainWindow::StartHashing1, worker1, &Worker::HashWorker);
     connect (worker1, &Worker::SendItem, this, &MainWindow::GetData);
@@ -160,7 +163,7 @@ void MainWindow::on_RefreshButton_clicked()
 
 void MainWindow::on_ResultList_itemDoubleClicked(QListWidgetItem *item)
 {
-    QFileInfo FIleInfo(item->text());
+    QFileInfo FIleInfo(item->text().remove(0,item->text().indexOf(":") + 2));
     QDesktopServices::openUrl(QUrl("file:///" + FIleInfo.path()));
 }
 
@@ -169,7 +172,7 @@ void MainWindow::GetData(const QString &itemPath, const QString &name)
     /*Get data from one of the workers. Create item from it and add it to the Result list*/
 
     QListWidgetItem *item = new QListWidgetItem(ui->ResultList);
-    item->setText("(" + name + ") " + "Path:" + itemPath );
+    item->setText("(" + name + ") " + "Path: " + itemPath );
     QFileInfo finfo(itemPath);
     QFileIconProvider ip;
     QIcon ic=ip.icon(finfo);
@@ -238,3 +241,29 @@ void MainWindow::on_LowerLine_textChanged(const QString &arg1)
         ui->LowerList->setRootIndex(model->index(arg1));
 }
 
+//Context menu for the result list
+void MainWindow::on_ResultList_customContextMenuRequested(const QPoint &pos)
+{
+    if (ui->ResultList->itemAt(pos) != NULL)
+    {
+    QMenu menu;
+    QAction Delete;
+    Delete.setShortcut(QKeySequence::Delete);
+    Delete.setText("REMOVE");
+    Delete.setStatusTip("COMPLETELY remove file from your computer");
+    Delete.setIcon(QIcon(":/icons/Stop.png"));
+    connect (&Delete, &QAction::triggered, this, &MainWindow::deleteFile);
+    menu.addAction(&Delete);
+    menu.exec(ui->ResultList->viewport()->mapToGlobal(pos));
+    }
+}
+
+//Delete file signal
+void MainWindow::deleteFile()
+{
+    QListWidgetItem* item = ui->ResultList->currentItem();
+    QString path = item->text().remove(0,item->text().indexOf(":") + 2);
+    QFile file (path);
+    file.remove();
+    ui->ResultList->takeItem(ui->ResultList->currentRow());
+}

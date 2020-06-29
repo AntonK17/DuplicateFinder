@@ -41,6 +41,8 @@ private slots:
     void on_LowerInsideDirs_toggled(bool checked);
     void on_LowerLine_textChanged(const QString &arg1);
     void on_UpperLine_textChanged(const QString &arg1);
+    void on_ResultList_customContextMenuRequested(const QPoint &pos);
+    void deleteFile();
 
 private:
 
