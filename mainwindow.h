@@ -26,6 +26,8 @@ signals:
     //signals for worker1 and worker2 to start their algorithms
     void StartHashing1(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
     void StartHashing2(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
+
+    void AbortionStart();
 private slots:
 
     //slots which recieve signals from workers for getting data from them
@@ -49,7 +51,6 @@ private slots:
     //slots for
     void deleteFile(const bool&, const bool&);
     void DeleteEnabledChecker();
-    void WWindowClosed();
 private:
 
     /*flags we getting from check boxes. false means algorithm won't check all directories inside

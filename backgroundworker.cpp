@@ -12,20 +12,23 @@ void Worker::HashWorker(const QString &DirName, const QString &ExludeDirName, co
  if 'info' is a file then call ItemSender to find out what to do with it*/
 void Worker::GetFilesInHash(const QString &DirName, const QString &exlude)
 {
+    if(AbortionW) return;
         QDir dir = QDir(DirName);
-        foreach (QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::DirsFirst))
+        foreach (QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::DirsLast))
         {
+            if (AbortionW) return;
             if (info.absoluteFilePath()==exlude){}
             else
             {
-                if (info.isDir() && dir.cd(info.fileName()) && AllowInsiders)
+
+                if (!info.isDir())
+                {
+                ItemSender(info,*Hash);
+                }
+                else if (info.isDir() && dir.cd(info.fileName()) && AllowInsiders)
                 {
                 GetFilesInHash(dir.absolutePath(),exlude);
                 dir.cdUp();
-                }
-                else if (!info.isDir())
-                {
-                ItemSender(info,*Hash);
                 }
             }
         }
@@ -94,4 +97,9 @@ void Mydelay()
     QTime dieTime= QTime::currentTime().addSecs(1);
     while (QTime::currentTime() < dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+}
+
+void Worker::Abort()
+{
+    AbortionW = 1;
 }

@@ -30,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     //connections between Main Window and Warning Window
     connect (Ww, &WarningWindow::YesNoClicked, this, &MainWindow::deleteFile);
-    connect (Ww, &WarningWindow::rejected, this, &MainWindow::WWindowClosed);
 
     //connections for workers manipulation from main thread
     connect (this, &MainWindow::StartHashing1, worker1, &Worker::HashWorker);
@@ -53,6 +52,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->SortButton->setEnabled(false);
     ui->StopButton->setEnabled(false);
+
+    connect(this, &MainWindow::AbortionStart, worker1 ,&Worker::Abort);
+    connect(this, &MainWindow::AbortionStart, worker2 ,&Worker::Abort);
 }
 
 MainWindow::~MainWindow()
@@ -212,10 +214,11 @@ void MainWindow::on_StopButton_clicked()
     ui->StopButton->setEnabled(false);
     ui->HelperLabel->setText("Exiting...Please wait...");
     Mydelay();
-    thread1->quit();
+    emit AbortionStart();
+    /*thread1->quit();
     thread2->quit();
     thread1->wait();
-    thread2->wait();
+    thread2->wait();*/
 
     ui->CheckButton->setEnabled(true);
     ui->SortButton->setEnabled(true);
@@ -270,7 +273,7 @@ void MainWindow::deleteFile(const bool &DeleteEn, const bool& YesOrNo)
 {
     if (DeleteEn)
         DeleteEnabled=true;
-    this->setEnabled(true);
+
     if (YesOrNo)
     {
     QListWidgetItem* item = ui->ResultList->currentItem();
@@ -297,14 +300,6 @@ void MainWindow::DeleteEnabledChecker()
         deleteFile(DeleteEnabled, true);
     else
     {
-        Ww->show();
-        this->setDisabled(true);
-        Ww->setEnabled(true);
+        Ww->exec();
     }
-}
-
-// if Warning window was just closed
-void MainWindow::WWindowClosed()
-{
-    this->setEnabled(true);
 }

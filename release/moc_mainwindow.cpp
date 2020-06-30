@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../DuplicatesFinder/mainwindow.h"
+#include "../../../Git/Projects/LookingForDuplicate/DuplicateFinder/mainwindow.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
@@ -38,35 +38,36 @@ QT_MOC_LITERAL(3, 26, 7), // "DirName"
 QT_MOC_LITERAL(4, 34, 13), // "ExludeDirName"
 QT_MOC_LITERAL(5, 48, 15), // "InsidersAllowed"
 QT_MOC_LITERAL(6, 64, 13), // "StartHashing2"
-QT_MOC_LITERAL(7, 78, 14), // "WorkerFinished"
-QT_MOC_LITERAL(8, 93, 7), // "GetData"
-QT_MOC_LITERAL(9, 101, 22), // "on_CheckButton_clicked"
-QT_MOC_LITERAL(10, 124, 24), // "on_RefreshButton_clicked"
-QT_MOC_LITERAL(11, 149, 31), // "on_ResultList_itemDoubleClicked"
-QT_MOC_LITERAL(12, 181, 16), // "QListWidgetItem*"
-QT_MOC_LITERAL(13, 198, 4), // "item"
-QT_MOC_LITERAL(14, 203, 26), // "on_UpperList_doubleClicked"
-QT_MOC_LITERAL(15, 230, 5), // "index"
-QT_MOC_LITERAL(16, 236, 26), // "on_LowerList_doubleClicked"
-QT_MOC_LITERAL(17, 263, 21), // "on_SortButton_clicked"
-QT_MOC_LITERAL(18, 285, 21), // "on_StopButton_clicked"
-QT_MOC_LITERAL(19, 307, 26), // "on_UpperInsideDirs_toggled"
-QT_MOC_LITERAL(20, 334, 7), // "checked"
-QT_MOC_LITERAL(21, 342, 26), // "on_LowerInsideDirs_toggled"
-QT_MOC_LITERAL(22, 369, 24), // "on_LowerLine_textChanged"
-QT_MOC_LITERAL(23, 394, 4), // "arg1"
-QT_MOC_LITERAL(24, 399, 24), // "on_UpperLine_textChanged"
-QT_MOC_LITERAL(25, 424, 40), // "on_ResultList_customContextMe..."
-QT_MOC_LITERAL(26, 465, 3), // "pos"
-QT_MOC_LITERAL(27, 469, 10), // "deleteFile"
-QT_MOC_LITERAL(28, 480, 20), // "DeleteEnabledChecker"
-QT_MOC_LITERAL(29, 501, 13) // "WWindowClosed"
+QT_MOC_LITERAL(7, 78, 13), // "AbortionStart"
+QT_MOC_LITERAL(8, 92, 14), // "WorkerFinished"
+QT_MOC_LITERAL(9, 107, 7), // "GetData"
+QT_MOC_LITERAL(10, 115, 22), // "on_CheckButton_clicked"
+QT_MOC_LITERAL(11, 138, 24), // "on_RefreshButton_clicked"
+QT_MOC_LITERAL(12, 163, 31), // "on_ResultList_itemDoubleClicked"
+QT_MOC_LITERAL(13, 195, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(14, 212, 4), // "item"
+QT_MOC_LITERAL(15, 217, 26), // "on_UpperList_doubleClicked"
+QT_MOC_LITERAL(16, 244, 5), // "index"
+QT_MOC_LITERAL(17, 250, 26), // "on_LowerList_doubleClicked"
+QT_MOC_LITERAL(18, 277, 21), // "on_SortButton_clicked"
+QT_MOC_LITERAL(19, 299, 21), // "on_StopButton_clicked"
+QT_MOC_LITERAL(20, 321, 26), // "on_UpperInsideDirs_toggled"
+QT_MOC_LITERAL(21, 348, 7), // "checked"
+QT_MOC_LITERAL(22, 356, 26), // "on_LowerInsideDirs_toggled"
+QT_MOC_LITERAL(23, 383, 24), // "on_LowerLine_textChanged"
+QT_MOC_LITERAL(24, 408, 4), // "arg1"
+QT_MOC_LITERAL(25, 413, 24), // "on_UpperLine_textChanged"
+QT_MOC_LITERAL(26, 438, 40), // "on_ResultList_customContextMe..."
+QT_MOC_LITERAL(27, 479, 3), // "pos"
+QT_MOC_LITERAL(28, 483, 10), // "deleteFile"
+QT_MOC_LITERAL(29, 494, 20) // "DeleteEnabledChecker"
 
     },
     "MainWindow\0StartHashing1\0\0DirName\0"
     "ExludeDirName\0InsidersAllowed\0"
-    "StartHashing2\0WorkerFinished\0GetData\0"
-    "on_CheckButton_clicked\0on_RefreshButton_clicked\0"
+    "StartHashing2\0AbortionStart\0WorkerFinished\0"
+    "GetData\0on_CheckButton_clicked\0"
+    "on_RefreshButton_clicked\0"
     "on_ResultList_itemDoubleClicked\0"
     "QListWidgetItem*\0item\0on_UpperList_doubleClicked\0"
     "index\0on_LowerList_doubleClicked\0"
@@ -76,8 +77,7 @@ QT_MOC_LITERAL(29, 501, 13) // "WWindowClosed"
     "on_LowerLine_textChanged\0arg1\0"
     "on_UpperLine_textChanged\0"
     "on_ResultList_customContextMenuRequested\0"
-    "pos\0deleteFile\0DeleteEnabledChecker\0"
-    "WWindowClosed"
+    "pos\0deleteFile\0DeleteEnabledChecker"
 };
 #undef QT_MOC_LITERAL
 
@@ -92,52 +92,52 @@ static const uint qt_meta_data_MainWindow[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
        1,    3,  109,    2, 0x06 /* Public */,
        6,    3,  116,    2, 0x06 /* Public */,
+       7,    0,  123,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    0,  123,    2, 0x08 /* Private */,
-       8,    2,  124,    2, 0x08 /* Private */,
-       9,    0,  129,    2, 0x08 /* Private */,
+       8,    0,  124,    2, 0x08 /* Private */,
+       9,    2,  125,    2, 0x08 /* Private */,
       10,    0,  130,    2, 0x08 /* Private */,
-      11,    1,  131,    2, 0x08 /* Private */,
-      14,    1,  134,    2, 0x08 /* Private */,
-      16,    1,  137,    2, 0x08 /* Private */,
-      17,    0,  140,    2, 0x08 /* Private */,
+      11,    0,  131,    2, 0x08 /* Private */,
+      12,    1,  132,    2, 0x08 /* Private */,
+      15,    1,  135,    2, 0x08 /* Private */,
+      17,    1,  138,    2, 0x08 /* Private */,
       18,    0,  141,    2, 0x08 /* Private */,
-      19,    1,  142,    2, 0x08 /* Private */,
-      21,    1,  145,    2, 0x08 /* Private */,
-      22,    1,  148,    2, 0x08 /* Private */,
-      24,    1,  151,    2, 0x08 /* Private */,
-      25,    1,  154,    2, 0x08 /* Private */,
-      27,    2,  157,    2, 0x08 /* Private */,
-      28,    0,  162,    2, 0x08 /* Private */,
+      19,    0,  142,    2, 0x08 /* Private */,
+      20,    1,  143,    2, 0x08 /* Private */,
+      22,    1,  146,    2, 0x08 /* Private */,
+      23,    1,  149,    2, 0x08 /* Private */,
+      25,    1,  152,    2, 0x08 /* Private */,
+      26,    1,  155,    2, 0x08 /* Private */,
+      28,    2,  158,    2, 0x08 /* Private */,
       29,    0,  163,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,    3,    4,    5,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,    3,    4,    5,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,    2,    2,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 12,   13,
-    QMetaType::Void, QMetaType::QModelIndex,   15,
-    QMetaType::Void, QMetaType::QModelIndex,   15,
+    QMetaType::Void, 0x80000000 | 13,   14,
+    QMetaType::Void, QMetaType::QModelIndex,   16,
+    QMetaType::Void, QMetaType::QModelIndex,   16,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   20,
-    QMetaType::Void, QMetaType::Bool,   20,
-    QMetaType::Void, QMetaType::QString,   23,
-    QMetaType::Void, QMetaType::QString,   23,
-    QMetaType::Void, QMetaType::QPoint,   26,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Void, QMetaType::QPoint,   27,
     QMetaType::Void, QMetaType::Bool, QMetaType::Bool,    2,    2,
-    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -151,23 +151,23 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->StartHashing1((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const bool(*)>(_a[3]))); break;
         case 1: _t->StartHashing2((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const bool(*)>(_a[3]))); break;
-        case 2: _t->WorkerFinished(); break;
-        case 3: _t->GetData((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
-        case 4: _t->on_CheckButton_clicked(); break;
-        case 5: _t->on_RefreshButton_clicked(); break;
-        case 6: _t->on_ResultList_itemDoubleClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
-        case 7: _t->on_UpperList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 8: _t->on_LowerList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 9: _t->on_SortButton_clicked(); break;
-        case 10: _t->on_StopButton_clicked(); break;
-        case 11: _t->on_UpperInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 12: _t->on_LowerInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 13: _t->on_LowerLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 14: _t->on_UpperLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 15: _t->on_ResultList_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 16: _t->deleteFile((*reinterpret_cast< const bool(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
-        case 17: _t->DeleteEnabledChecker(); break;
-        case 18: _t->WWindowClosed(); break;
+        case 2: _t->AbortionStart(); break;
+        case 3: _t->WorkerFinished(); break;
+        case 4: _t->GetData((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 5: _t->on_CheckButton_clicked(); break;
+        case 6: _t->on_RefreshButton_clicked(); break;
+        case 7: _t->on_ResultList_itemDoubleClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 8: _t->on_UpperList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 9: _t->on_LowerList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 10: _t->on_SortButton_clicked(); break;
+        case 11: _t->on_StopButton_clicked(); break;
+        case 12: _t->on_UpperInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->on_LowerInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 14: _t->on_LowerLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 15: _t->on_UpperLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 16: _t->on_ResultList_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 17: _t->deleteFile((*reinterpret_cast< const bool(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
+        case 18: _t->DeleteEnabledChecker(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -183,6 +183,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             typedef void (MainWindow::*_t)(const QString & , const QString & , const bool & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MainWindow::StartHashing2)) {
                 *result = 1;
+                return;
+            }
+        }
+        {
+            typedef void (MainWindow::*_t)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MainWindow::AbortionStart)) {
+                *result = 2;
                 return;
             }
         }
@@ -237,6 +244,12 @@ void MainWindow::StartHashing2(const QString & _t1, const QString & _t2, const b
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void MainWindow::AbortionStart()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE
