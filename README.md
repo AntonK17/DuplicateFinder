@@ -11,3 +11,5 @@ After main algorithm finishes it work you can scroll the list and open each dupl
 * Abortion doidnt work. I tried different methods to stop a recursive function from main thread. two or three times (it was like a strange random) signal was emitted from the main thread and flag was changed. Now abortion is working. I dont feel like this is the right method but im sure i have to dig deeper at signal/slots between threads and event loops themes 
 # WhatToDo:
 * Columns not conveniant enough. I guess QTreeView will be better cause i didnt find any signals for clicking on headers events.
+* Selection mode in result table
+* Maybe Cross-platforming attempt or more work with threads
