@@ -3,8 +3,10 @@
 void Worker::HashWorker(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed)
 {
     AllowInsiders=InsidersAllowed;
+    AbortionW=false;
     GetFilesInHash(DirName,ExludeDirName);
     emit FinishedWork();
+    AbortionW=false;
 }
 
 /*looking for every file (which match filters) in the directory
@@ -12,31 +14,37 @@ void Worker::HashWorker(const QString &DirName, const QString &ExludeDirName, co
  if 'info' is a file then call ItemSender to find out what to do with it*/
 void Worker::GetFilesInHash(const QString &DirName, const QString &exlude)
 {
-    if(AbortionW) return;
+    QMutex mut;
         QDir dir = QDir(DirName);
         foreach (QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::DirsLast))
         {
-            if (AbortionW) return;
-            if (info.absoluteFilePath()==exlude){}
+            mut.lock();
+            if(AbortionW)
+            {mut.unlock(); return;}
             else
-            {
-
-                if (!info.isDir())
+            {mut.unlock();
+                if (info.absoluteFilePath()==exlude){}
+                else
                 {
-                ItemSender(info,*Hash);
-                }
-                else if (info.isDir() && dir.cd(info.fileName()) && AllowInsiders)
-                {
-                GetFilesInHash(dir.absolutePath(),exlude);
-                dir.cdUp();
+                    if (!info.isDir())
+                    {
+                    ItemSender(info,*Hash);
+                    }
+                    else if (info.isDir() && dir.cd(info.fileName()) && AllowInsiders)
+                    {
+                    GetFilesInHash(dir.absolutePath(),exlude);
+                    dir.cdUp();
+                    }
                 }
             }
         }
+     return;
+
 }
 
 /* if method won't find any records with the same key as 'info'(name and size pair) create new record
  * if it will then compare all the files records point to with 'info' file. 'HashSumCheck' function will help
- * if the files match then send them to the main thread and flag(it.value().second) that file's information from the record has already been sent*/
+ * if the files match then send their paths to the Qstring List*/
 void Worker::ItemSender(const QFileInfo &info, MyMap &Hash)
 {
     QMutex mutex;
@@ -47,10 +55,10 @@ void Worker::ItemSender(const QFileInfo &info, MyMap &Hash)
     {
           if(HashSumCheck(it.value().first,info.absoluteFilePath()))
           {
-              emit SendItem(info.absoluteFilePath(), info.fileName());
+              Results->push_back(info.absoluteFilePath());
               if(it.value().second == false)
               {
-                  emit SendItem(it.value().first, it.key().first);
+                  Results->push_back(it.value().first);
                   it.value().second=true;
               }
               return;
@@ -63,7 +71,7 @@ void Worker::ItemSender(const QFileInfo &info, MyMap &Hash)
 
 /*Method checks hash-sums for two files
  * if md5 sum is exact the same for both files then they are duplicates with an almost 100% probability*/
-bool Worker::HashSumCheck (const QString &filename1, const QString &filename2)
+bool inline Worker::HashSumCheck (const QString &filename1, const QString &filename2)
 {
     QCryptographicHash Md5Hash(QCryptographicHash::Md5);
     QByteArray check;
@@ -101,5 +109,5 @@ void Mydelay()
 
 void Worker::Abort()
 {
-    AbortionW = 1;
+    AbortionW=true;
 }

@@ -16,15 +16,27 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LowerList->setModel(model);
 
     //create workers and threads for them
-    Worker *worker1=new Worker(HashTable);
-    Worker *worker2=new Worker(HashTable);
+    Worker *worker1=new Worker(HashTable, MainList);
+    Worker *worker2=new Worker(HashTable, MainList);
     thread1=new QThread();
     thread2=new QThread();
     worker1->moveToThread(thread1);
     worker2->moveToThread(thread2);
 
-    //context menu for result list
+    //context menu and other setups for result list
     ui->ResultList->setContextMenuPolicy(Qt::CustomContextMenu);
+    ui->ResultList->setColumnCount(4);
+    ui->ResultList->setColumnWidth(0,1);
+    ui->ResultList->setColumnWidth(1,150);
+    ui->ResultList->setColumnWidth(2,75);
+    QList<QString> ListOfStrings;
+    ListOfStrings.push_back("");
+    ListOfStrings.push_back("File Name");
+    ListOfStrings.push_back("Size");
+    ListOfStrings.push_back("Path");
+    QStringList list(ListOfStrings);
+    ui->ResultList->setHeaderLabels(list);
+    ui->ResultList->setRootIsDecorated(false);
 
     Ww=new WarningWindow(this);
 
@@ -33,11 +45,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     //connections for workers manipulation from main thread
     connect (this, &MainWindow::StartHashing1, worker1, &Worker::HashWorker);
-    connect (worker1, &Worker::SendItem, this, &MainWindow::GetData);
     connect (this, &MainWindow::StartHashing2, worker2, &Worker::HashWorker);
-    connect (worker2, &Worker::SendItem, this, &MainWindow::GetData);
     connect (worker1, &Worker::FinishedWork, this, &MainWindow::WorkerFinished);
     connect (worker2, &Worker::FinishedWork, this, &MainWindow::WorkerFinished);
+    connect (this, &MainWindow::CountDuplicatesSe, this, &MainWindow::CountDuplicatesRe);
 
     //setup other stuff for better visual performance
     spinner = new WaitingSpinnerWidget(ui->ForSpinner);
@@ -55,6 +66,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(this, &MainWindow::AbortionStart, worker1 ,&Worker::Abort);
     connect(this, &MainWindow::AbortionStart, worker2 ,&Worker::Abort);
+
+    thread1->start();
+    thread2->start();
 }
 
 MainWindow::~MainWindow()
@@ -117,13 +131,14 @@ void MainWindow::on_CheckButton_clicked()
     QString SecondDir = model->filePath(ui->LowerList->rootIndex());
     if (IsDirNotDifferent(FirstDir,SecondDir))
     {
-    HashTable.clear();
     ui->ResultList->clear();
     spinner->start();
     ui->SortButton->setEnabled(false);
     ui->CheckButton->setEnabled(false);
     ui->StopButton->setEnabled(true);
-    ui->HelperLabel->setText("Double click on file to open its directory in explorer");
+    ui->HelperLabel->setText("Searching...");
+    counting=1;
+    emit CountDuplicatesSe();
     }
 }
 
@@ -138,22 +153,16 @@ bool MainWindow::IsDirNotDifferent(const QString &str1, const QString &str2)
     }
     else if(str1.indexOf(str2) == 0 && str2.count("/") != str1.count("/"))
     {
-        thread1->start();
-        thread2->start();
         emit StartHashing1(str1,NULL,InsidersAllowedFlag1);
         emit StartHashing2(str2,str1,InsidersAllowedFlag2);
     }
     else if(str2.indexOf(str1) == 0 && str2.count("/") != str1.count("/"))
     {
-        thread1->start();
-        thread2->start();
         emit StartHashing1(str1,str2,InsidersAllowedFlag1);
         emit StartHashing2(str2,NULL,InsidersAllowedFlag2);
     }
     else
     {
-        thread1->start();
-        thread2->start();
         emit StartHashing1(str1,NULL,InsidersAllowedFlag1);
         emit StartHashing2(str2, NULL,InsidersAllowedFlag2);
     }
@@ -169,27 +178,26 @@ void MainWindow::on_RefreshButton_clicked()
     ui->UpperLine->setText(NULL);
 }
 
-void MainWindow::on_ResultList_itemDoubleClicked(QListWidgetItem *item)
-{
-    QFileInfo FIleInfo(item->text().remove(0,item->text().indexOf(":") + 2));
-    QDesktopServices::openUrl(QUrl("file:///" + FIleInfo.path()));
-}
-
 /*Get data from one of the workers. Create item from it and add it to the Result list*/
-void MainWindow::GetData(const QString &itemPath, const QString &name)
+void MainWindow::GetData()
 {
-    QListWidgetItem *item = new QListWidgetItem(ui->ResultList);
-    item->setText("(" + name + ") " + "Path: " + itemPath );
-    QFileInfo finfo(itemPath);
-    QFileIconProvider ip;
-    QIcon ic=ip.icon(finfo);
-    item->setIcon(ic);
-    ui->ResultList->addItem(item);
+    for(auto it=MainList.begin();it!=MainList.end();++it)
+    {
+        QFileInfo finfo(*it);
+        QTreeWidgetItem *item = new QTreeWidgetItem;
+        item->setText(1,finfo.fileName());
+        item->setText(2,QString::number(finfo.size()));
+        item->setText(3,finfo.absoluteFilePath());
+        QFileIconProvider ip;
+        QIcon ic=ip.icon(finfo);
+        item->setIcon(0,ic);
+        ui->ResultList->addTopLevelItem(item);
+    }
 }
 
 void MainWindow::on_SortButton_clicked()
 {
-    ui->ResultList->sortItems(Qt::AscendingOrder);
+    ui->ResultList->sortItems(1,Qt::AscendingOrder);
 }
 
 /*helps to find out both workers finished their tasks*/
@@ -198,32 +206,24 @@ void MainWindow::WorkerFinished()
     ++ThreadCounter;
     if (ThreadCounter == NumberOfThreads)
     {
+        GetData();
         spinner->stop();
         ui->SortButton->setEnabled(true);
         ui->CheckButton->setEnabled(true);
         ui->StopButton->setEnabled(false);
         ThreadCounter=0;
-        if (ui->ResultList->count()==0)
-            ui->HelperLabel->setText("Looks like no duplicates there");
+        counting=0;
+        MainList.clear();
+        HashTable.clear();
     }
 }
 
-/*quit the threads right way but takes long...*/
+/*quiting doesnt work for now...*/
 void MainWindow::on_StopButton_clicked()
 {
     ui->StopButton->setEnabled(false);
     ui->HelperLabel->setText("Exiting...Please wait...");
-    Mydelay();
     emit AbortionStart();
-    /*thread1->quit();
-    thread2->quit();
-    thread1->wait();
-    thread2->wait();*/
-
-    ui->CheckButton->setEnabled(true);
-    ui->SortButton->setEnabled(true);
-    spinner->stop();
-    ui->HelperLabel->setText("Double click on file to open its directory in explorer");
 }
 
 void MainWindow::on_UpperInsideDirs_toggled(bool checked)
@@ -276,11 +276,12 @@ void MainWindow::deleteFile(const bool &DeleteEn, const bool& YesOrNo)
 
     if (YesOrNo)
     {
-    QListWidgetItem* item = ui->ResultList->currentItem();
-    QString path = item->text().remove(0,item->text().indexOf(":") + 2);
+    QTreeWidgetItem* item = ui->ResultList->currentItem();
+    QString path = item->text(3);
     QFile file (path);
     file.remove();
-    ui->ResultList->takeItem(ui->ResultList->currentRow());
+    ui->ResultList->takeTopLevelItem(ui->ResultList->indexOfTopLevelItem(
+                                         ui->ResultList->currentItem()));
     }
 }
 
@@ -289,8 +290,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Delete && ui->ResultList->currentItem() != NULL)
        DeleteEnabledChecker();
-    if (event->key() == Qt::Key_Control && ui->ResultList->currentItem() != NULL)
-            ui->ResultList->currentItem()->setSelected(true);
 }
 
 // check if user really want to delete chosen file
@@ -302,4 +301,25 @@ void MainWindow::DeleteEnabledChecker()
     {
         Ww->exec();
     }
+}
+
+// duplicates counter
+void MainWindow::CountDuplicatesRe()
+{
+    ui->HelperLabel->setText("Searching... Duplicates: " + QVariant(MainList.size()).toString());
+      if (counting)
+    QTimer::singleShot(2, this, &MainWindow::CountDuplicatesSe);
+      else
+      {
+      if (ui->ResultList->topLevelItemCount()==0)
+          ui->HelperLabel->setText("Looks like no duplicates there");
+      else
+          ui->HelperLabel->setText("Double click on file to open its directory in explorer");
+      }
+}
+
+void MainWindow::on_ResultList_itemDoubleClicked(QTreeWidgetItem *item, int column)
+{
+    QFileInfo FIleInfo(item->text(3));
+    QDesktopServices::openUrl(QUrl("file:///" + FIleInfo.path()));
 }

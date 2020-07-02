@@ -14,16 +14,16 @@ class Worker : public QObject
      //signals for main thread. 'FinishedWork' will be emitted at the 'HashWorker' end
      //'SendItem' will send the name and absolute path of duplicate
      void FinishedWork();
-     void SendItem(const QString&, const QString&);
  public:
-     bool AllowInsiders=0;
-     Worker(MyMap& map) : Hash(&map){};
- private:
-     bool AbortionW=0;
-     void GetFilesInHash(const QString &DirName, const QString &ExludeDirName);
-     void ItemSender(const QFileInfo&, MyMap&);
-     bool HashSumCheck (const QString& filename1, const QString& filename2);
+     Worker(MyMap& map, QList<QString> &res) : Hash(&map), Results(&res){};
+ private:   
+     void  GetFilesInHash(const QString &DirName, const QString &ExludeDirName);
+     void  ItemSender(const QFileInfo&, MyMap&);
+     bool  HashSumCheck (const QString& filename1, const QString& filename2);
      MyMap *Hash;
+     QList<QString> *Results;
+     bool AbortionW;
+     bool AllowInsiders=0;
  };
 
 

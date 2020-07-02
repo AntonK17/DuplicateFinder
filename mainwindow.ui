@@ -161,12 +161,12 @@
              </widget>
             </item>
             <item>
-             <widget class="QListWidget" name="ResultList">
-              <property name="font">
-               <font>
-                <pointsize>12</pointsize>
-               </font>
-              </property>
+             <widget class="QTreeWidget" name="ResultList">
+              <column>
+               <property name="text">
+                <string notr="true">1</string>
+               </property>
+              </column>
              </widget>
             </item>
             <item>
@@ -306,7 +306,7 @@
      <x>0</x>
      <y>0</y>
      <width>1043</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

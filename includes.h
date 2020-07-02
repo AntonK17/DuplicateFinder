@@ -7,17 +7,17 @@
 #include <QDir>
 #include <QMainWindow>
 #include <QFileSystemModel>
-#include <QListWidget>
+#include <QTreeWidget>
 #include <QDesktopServices>
 #include <QFileDialog>
 #include <QFileIconProvider>
 #include <QLabel>
 #include <QThread>
 #include <QMutexLocker>
+#include <QMutex>
 #include <QTime>
 #include <QEventLoop>
 #include <QCoreApplication>
-#include <QDebug>
 #include <QtGui>
 #include <QFile>
 
