@@ -9,12 +9,12 @@ class Worker : public QObject
 
  public slots:
      void HashWorker(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
-     void Abort();
  signals:
      //signals for main thread. 'FinishedWork' will be emitted at the 'HashWorker' end
      //'SendItem' will send the name and absolute path of duplicate
      void FinishedWork();
  public:
+     bool AbortionW;
      Worker(MyMap& map, QList<QString> &res) : Hash(&map), Results(&res){};
  private:   
      void  GetFilesInHash(const QString &DirName, const QString &ExludeDirName);
@@ -22,7 +22,7 @@ class Worker : public QObject
      bool  HashSumCheck (const QString& filename1, const QString& filename2);
      MyMap *Hash;
      QList<QString> *Results;
-     bool AbortionW;
+
      bool AllowInsiders=0;
  };
 

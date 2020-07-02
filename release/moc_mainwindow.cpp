@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
-    QByteArrayData data[32];
-    char stringdata0[550];
+    QByteArrayData data[31];
+    char stringdata0[536];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,38 +38,37 @@ QT_MOC_LITERAL(3, 26, 7), // "DirName"
 QT_MOC_LITERAL(4, 34, 13), // "ExludeDirName"
 QT_MOC_LITERAL(5, 48, 15), // "InsidersAllowed"
 QT_MOC_LITERAL(6, 64, 13), // "StartHashing2"
-QT_MOC_LITERAL(7, 78, 13), // "AbortionStart"
-QT_MOC_LITERAL(8, 92, 17), // "CountDuplicatesSe"
-QT_MOC_LITERAL(9, 110, 14), // "WorkerFinished"
-QT_MOC_LITERAL(10, 125, 22), // "on_CheckButton_clicked"
-QT_MOC_LITERAL(11, 148, 24), // "on_RefreshButton_clicked"
-QT_MOC_LITERAL(12, 173, 31), // "on_ResultList_itemDoubleClicked"
-QT_MOC_LITERAL(13, 205, 16), // "QTreeWidgetItem*"
-QT_MOC_LITERAL(14, 222, 4), // "item"
-QT_MOC_LITERAL(15, 227, 6), // "column"
-QT_MOC_LITERAL(16, 234, 26), // "on_UpperList_doubleClicked"
-QT_MOC_LITERAL(17, 261, 5), // "index"
-QT_MOC_LITERAL(18, 267, 26), // "on_LowerList_doubleClicked"
-QT_MOC_LITERAL(19, 294, 21), // "on_SortButton_clicked"
-QT_MOC_LITERAL(20, 316, 21), // "on_StopButton_clicked"
-QT_MOC_LITERAL(21, 338, 26), // "on_UpperInsideDirs_toggled"
-QT_MOC_LITERAL(22, 365, 7), // "checked"
-QT_MOC_LITERAL(23, 373, 26), // "on_LowerInsideDirs_toggled"
-QT_MOC_LITERAL(24, 400, 24), // "on_LowerLine_textChanged"
-QT_MOC_LITERAL(25, 425, 4), // "arg1"
-QT_MOC_LITERAL(26, 430, 24), // "on_UpperLine_textChanged"
-QT_MOC_LITERAL(27, 455, 40), // "on_ResultList_customContextMe..."
-QT_MOC_LITERAL(28, 496, 3), // "pos"
-QT_MOC_LITERAL(29, 500, 10), // "deleteFile"
-QT_MOC_LITERAL(30, 511, 20), // "DeleteEnabledChecker"
-QT_MOC_LITERAL(31, 532, 17) // "CountDuplicatesRe"
+QT_MOC_LITERAL(7, 78, 17), // "CountDuplicatesSe"
+QT_MOC_LITERAL(8, 96, 14), // "WorkerFinished"
+QT_MOC_LITERAL(9, 111, 22), // "on_CheckButton_clicked"
+QT_MOC_LITERAL(10, 134, 24), // "on_RefreshButton_clicked"
+QT_MOC_LITERAL(11, 159, 31), // "on_ResultList_itemDoubleClicked"
+QT_MOC_LITERAL(12, 191, 16), // "QTreeWidgetItem*"
+QT_MOC_LITERAL(13, 208, 4), // "item"
+QT_MOC_LITERAL(14, 213, 6), // "column"
+QT_MOC_LITERAL(15, 220, 26), // "on_UpperList_doubleClicked"
+QT_MOC_LITERAL(16, 247, 5), // "index"
+QT_MOC_LITERAL(17, 253, 26), // "on_LowerList_doubleClicked"
+QT_MOC_LITERAL(18, 280, 21), // "on_SortButton_clicked"
+QT_MOC_LITERAL(19, 302, 21), // "on_StopButton_clicked"
+QT_MOC_LITERAL(20, 324, 26), // "on_UpperInsideDirs_toggled"
+QT_MOC_LITERAL(21, 351, 7), // "checked"
+QT_MOC_LITERAL(22, 359, 26), // "on_LowerInsideDirs_toggled"
+QT_MOC_LITERAL(23, 386, 24), // "on_LowerLine_textChanged"
+QT_MOC_LITERAL(24, 411, 4), // "arg1"
+QT_MOC_LITERAL(25, 416, 24), // "on_UpperLine_textChanged"
+QT_MOC_LITERAL(26, 441, 40), // "on_ResultList_customContextMe..."
+QT_MOC_LITERAL(27, 482, 3), // "pos"
+QT_MOC_LITERAL(28, 486, 10), // "deleteFile"
+QT_MOC_LITERAL(29, 497, 20), // "DeleteEnabledChecker"
+QT_MOC_LITERAL(30, 518, 17) // "CountDuplicatesRe"
 
     },
     "MainWindow\0StartHashing1\0\0DirName\0"
     "ExludeDirName\0InsidersAllowed\0"
-    "StartHashing2\0AbortionStart\0"
-    "CountDuplicatesSe\0WorkerFinished\0"
-    "on_CheckButton_clicked\0on_RefreshButton_clicked\0"
+    "StartHashing2\0CountDuplicatesSe\0"
+    "WorkerFinished\0on_CheckButton_clicked\0"
+    "on_RefreshButton_clicked\0"
     "on_ResultList_itemDoubleClicked\0"
     "QTreeWidgetItem*\0item\0column\0"
     "on_UpperList_doubleClicked\0index\0"
@@ -91,57 +90,55 @@ static const uint qt_meta_data_MainWindow[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,  114,    2, 0x06 /* Public */,
-       6,    3,  121,    2, 0x06 /* Public */,
-       7,    0,  128,    2, 0x06 /* Public */,
-       8,    0,  129,    2, 0x06 /* Public */,
+       1,    3,  109,    2, 0x06 /* Public */,
+       6,    3,  116,    2, 0x06 /* Public */,
+       7,    0,  123,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       9,    0,  130,    2, 0x08 /* Private */,
-      10,    0,  131,    2, 0x08 /* Private */,
-      11,    0,  132,    2, 0x08 /* Private */,
-      12,    2,  133,    2, 0x08 /* Private */,
-      16,    1,  138,    2, 0x08 /* Private */,
-      18,    1,  141,    2, 0x08 /* Private */,
-      19,    0,  144,    2, 0x08 /* Private */,
-      20,    0,  145,    2, 0x08 /* Private */,
-      21,    1,  146,    2, 0x08 /* Private */,
-      23,    1,  149,    2, 0x08 /* Private */,
-      24,    1,  152,    2, 0x08 /* Private */,
-      26,    1,  155,    2, 0x08 /* Private */,
-      27,    1,  158,    2, 0x08 /* Private */,
-      29,    2,  161,    2, 0x08 /* Private */,
-      30,    0,  166,    2, 0x08 /* Private */,
-      31,    0,  167,    2, 0x08 /* Private */,
+       8,    0,  124,    2, 0x08 /* Private */,
+       9,    0,  125,    2, 0x08 /* Private */,
+      10,    0,  126,    2, 0x08 /* Private */,
+      11,    2,  127,    2, 0x08 /* Private */,
+      15,    1,  132,    2, 0x08 /* Private */,
+      17,    1,  135,    2, 0x08 /* Private */,
+      18,    0,  138,    2, 0x08 /* Private */,
+      19,    0,  139,    2, 0x08 /* Private */,
+      20,    1,  140,    2, 0x08 /* Private */,
+      22,    1,  143,    2, 0x08 /* Private */,
+      23,    1,  146,    2, 0x08 /* Private */,
+      25,    1,  149,    2, 0x08 /* Private */,
+      26,    1,  152,    2, 0x08 /* Private */,
+      28,    2,  155,    2, 0x08 /* Private */,
+      29,    0,  160,    2, 0x08 /* Private */,
+      30,    0,  161,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,    3,    4,    5,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::Bool,    3,    4,    5,
-    QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 13, QMetaType::Int,   14,   15,
-    QMetaType::Void, QMetaType::QModelIndex,   17,
-    QMetaType::Void, QMetaType::QModelIndex,   17,
+    QMetaType::Void, 0x80000000 | 12, QMetaType::Int,   13,   14,
+    QMetaType::Void, QMetaType::QModelIndex,   16,
+    QMetaType::Void, QMetaType::QModelIndex,   16,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   22,
-    QMetaType::Void, QMetaType::Bool,   22,
-    QMetaType::Void, QMetaType::QString,   25,
-    QMetaType::Void, QMetaType::QString,   25,
-    QMetaType::Void, QMetaType::QPoint,   28,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, QMetaType::Bool,   21,
+    QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Void, QMetaType::QPoint,   27,
     QMetaType::Void, QMetaType::Bool, QMetaType::Bool,    2,    2,
     QMetaType::Void,
     QMetaType::Void,
@@ -157,24 +154,23 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->StartHashing1((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const bool(*)>(_a[3]))); break;
         case 1: _t->StartHashing2((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const bool(*)>(_a[3]))); break;
-        case 2: _t->AbortionStart(); break;
-        case 3: _t->CountDuplicatesSe(); break;
-        case 4: _t->WorkerFinished(); break;
-        case 5: _t->on_CheckButton_clicked(); break;
-        case 6: _t->on_RefreshButton_clicked(); break;
-        case 7: _t->on_ResultList_itemDoubleClicked((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 8: _t->on_UpperList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 9: _t->on_LowerList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 10: _t->on_SortButton_clicked(); break;
-        case 11: _t->on_StopButton_clicked(); break;
-        case 12: _t->on_UpperInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 13: _t->on_LowerInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 14: _t->on_LowerLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 15: _t->on_UpperLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
-        case 16: _t->on_ResultList_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
-        case 17: _t->deleteFile((*reinterpret_cast< const bool(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
-        case 18: _t->DeleteEnabledChecker(); break;
-        case 19: _t->CountDuplicatesRe(); break;
+        case 2: _t->CountDuplicatesSe(); break;
+        case 3: _t->WorkerFinished(); break;
+        case 4: _t->on_CheckButton_clicked(); break;
+        case 5: _t->on_RefreshButton_clicked(); break;
+        case 6: _t->on_ResultList_itemDoubleClicked((*reinterpret_cast< QTreeWidgetItem*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 7: _t->on_UpperList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 8: _t->on_LowerList_doubleClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
+        case 9: _t->on_SortButton_clicked(); break;
+        case 10: _t->on_StopButton_clicked(); break;
+        case 11: _t->on_UpperInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 12: _t->on_LowerInsideDirs_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->on_LowerLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 14: _t->on_UpperLine_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 15: _t->on_ResultList_customContextMenuRequested((*reinterpret_cast< const QPoint(*)>(_a[1]))); break;
+        case 16: _t->deleteFile((*reinterpret_cast< const bool(*)>(_a[1])),(*reinterpret_cast< const bool(*)>(_a[2]))); break;
+        case 17: _t->DeleteEnabledChecker(); break;
+        case 18: _t->CountDuplicatesRe(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -195,15 +191,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         }
         {
             typedef void (MainWindow::*_t)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MainWindow::AbortionStart)) {
-                *result = 2;
-                return;
-            }
-        }
-        {
-            typedef void (MainWindow::*_t)();
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&MainWindow::CountDuplicatesSe)) {
-                *result = 3;
+                *result = 2;
                 return;
             }
         }
@@ -235,13 +224,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 19;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 19)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 19;
     }
     return _id;
 }
@@ -261,15 +250,9 @@ void MainWindow::StartHashing2(const QString & _t1, const QString & _t2, const b
 }
 
 // SIGNAL 2
-void MainWindow::AbortionStart()
-{
-    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
-}
-
-// SIGNAL 3
 void MainWindow::CountDuplicatesSe()
 {
-    QMetaObject::activate(this, &staticMetaObject, 3, nullptr);
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

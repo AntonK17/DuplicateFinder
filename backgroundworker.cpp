@@ -106,8 +106,3 @@ void Mydelay()
     while (QTime::currentTime() < dieTime)
         QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 }
-
-void Worker::Abort()
-{
-    AbortionW=true;
-}

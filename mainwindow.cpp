@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->LowerList->setModel(model);
 
     //create workers and threads for them
-    Worker *worker1=new Worker(HashTable, MainList);
-    Worker *worker2=new Worker(HashTable, MainList);
+    worker1=new Worker(HashTable, MainList);
+    worker2=new Worker(HashTable, MainList);
     thread1=new QThread();
     thread2=new QThread();
     worker1->moveToThread(thread1);
@@ -63,9 +63,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->SortButton->setEnabled(false);
     ui->StopButton->setEnabled(false);
-
-    connect(this, &MainWindow::AbortionStart, worker1 ,&Worker::Abort);
-    connect(this, &MainWindow::AbortionStart, worker2 ,&Worker::Abort);
 
     thread1->start();
     thread2->start();
@@ -221,9 +218,15 @@ void MainWindow::WorkerFinished()
 /*quiting doesnt work for now...*/
 void MainWindow::on_StopButton_clicked()
 {
+    QMutex mutex;
     ui->StopButton->setEnabled(false);
     ui->HelperLabel->setText("Exiting...Please wait...");
-    emit AbortionStart();
+    mutex.lock();
+    worker1->AbortionW=true;
+    mutex.unlock();
+    mutex.lock();
+    worker2->AbortionW=true;
+    mutex.unlock();
 }
 
 void MainWindow::on_UpperInsideDirs_toggled(bool checked)

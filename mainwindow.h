@@ -26,7 +26,6 @@ signals:
     //signals for worker1 and worker2 to start their algorithms
     void StartHashing1(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
     void StartHashing2(const QString &DirName, const QString &ExludeDirName, const bool &InsidersAllowed);
-    void AbortionStart();
     void CountDuplicatesSe();
 private slots:
 
@@ -72,6 +71,8 @@ private:
     QThread *thread2;
     WaitingSpinnerWidget *spinner;
     void GetData();
+    Worker *worker1;
+    Worker *worker2;
 protected:
     void keyPressEvent(QKeyEvent *event);
 };
